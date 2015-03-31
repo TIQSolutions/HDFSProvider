@@ -1,0 +1,2 @@
+de.tiqsolutions.hdfs.HadoopFileSystemProvider
+de.tiqsolutions.webhdfs.HadoopWebFileSystemProvider
