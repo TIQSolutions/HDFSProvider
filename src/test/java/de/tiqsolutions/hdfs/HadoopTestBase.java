@@ -25,17 +25,44 @@ import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.Arrays;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileUtil;
 import org.apache.hadoop.hdfs.MiniDFSCluster;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+import org.junit.runners.Parameterized.Parameters;
 
+import de.tiqsolutions.webhdfs.HadoopWebFileSystem;
+
+@RunWith(Parameterized.class)
 public abstract class HadoopTestBase {
-	protected static URI HDFS_BASE_URI;
-	protected static URI WEBHDFS_BASE_URI;
+	private static URI HDFS_BASE_URI;
+	private static URI WEBHDFS_BASE_URI;
+	protected final URI BASE_URI;
 	private static MiniDFSCluster hdfsCluster;
+
+	@Parameters
+	public static Iterable<String[]> data() {
+		return Arrays.asList(new String[][] { { HadoopFileSystem.SCHEME },
+				{ HadoopWebFileSystem.SCHEME } });
+	}
+
+	public HadoopTestBase(String base) {
+		switch (base) {
+		case HadoopFileSystem.SCHEME:
+			BASE_URI = HDFS_BASE_URI;
+			break;
+		case HadoopWebFileSystem.SCHEME:
+			BASE_URI = WEBHDFS_BASE_URI;
+			break;
+		default:
+			throw new IllegalArgumentException(base);
+		}
+	}
 
 	@BeforeClass
 	public static void setUp() throws Exception {

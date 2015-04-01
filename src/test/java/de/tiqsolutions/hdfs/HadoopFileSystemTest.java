@@ -31,16 +31,15 @@ import java.util.Arrays;
 import java.util.Set;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
 public class HadoopFileSystemTest extends HadoopTestBase {
-	private URI hdfsfile;
-
-	@Before
-	public void setUpBefore() throws Exception {
-		this.hdfsfile = HDFS_BASE_URI.resolve("/test.csv");
+	public HadoopFileSystemTest(String base) {
+		super(base);
+		this.hdfsfile = BASE_URI.resolve("/test.csv");
 	}
+
+	private URI hdfsfile;
 
 	@Test
 	public void testClose() throws IOException {

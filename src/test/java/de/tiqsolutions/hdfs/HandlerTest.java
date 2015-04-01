@@ -28,9 +28,13 @@ import org.junit.Assert;
 import org.junit.Test;
 
 public class HandlerTest extends HadoopTestBase {
+	public HandlerTest(String base) {
+		super(base);
+	}
+
 	@Test
 	public void testHdfsURL() throws IOException, URISyntaxException {
-		URL url = HDFS_BASE_URI.resolve("/test.csv").toURL();
+		URL url = BASE_URI.resolve("/test.csv").toURL();
 		URLConnection conn = url.openConnection();
 		Assert.assertNotNull((Object) conn);
 		Assert.assertEquals((Object) "org.apache.hadoop.fs.FsUrlConnection",
@@ -40,15 +44,15 @@ public class HandlerTest extends HadoopTestBase {
 		}
 	}
 
-	@Test
-	public void testWebhdfsURL() throws IOException, URISyntaxException {
-		URL url = WEBHDFS_BASE_URI.resolve("/test.csv").toURL();
-		URLConnection conn = url.openConnection();
-		Assert.assertNotNull((Object) conn);
-		Assert.assertEquals((Object) "org.apache.hadoop.fs.FsUrlConnection",
-				(Object) conn.getClass().getName());
-		try (InputStream in = conn.getInputStream()) {
-			Assert.assertNotNull((Object) in);
-		}
-	}
+	// @Test
+	// public void testWebhdfsURL() throws IOException, URISyntaxException {
+	// URL url = WEBHDFS_BASE_URI.resolve("/test.csv").toURL();
+	// URLConnection conn = url.openConnection();
+	// Assert.assertNotNull((Object) conn);
+	// Assert.assertEquals((Object) "org.apache.hadoop.fs.FsUrlConnection",
+	// (Object) conn.getClass().getName());
+	// try (InputStream in = conn.getInputStream()) {
+	// Assert.assertNotNull((Object) in);
+	// }
+	// }
 }

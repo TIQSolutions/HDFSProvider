@@ -50,16 +50,15 @@ import java.util.ServiceLoader;
 import java.util.Set;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
 public class HadoopFileSystemProviderTest extends HadoopTestBase {
-	private URI hdfsfile;
-
-	@Before
-	public void setup() throws URISyntaxException {
-		this.hdfsfile = HDFS_BASE_URI.resolve("/test.csv");
+	public HadoopFileSystemProviderTest(String base) {
+		super(base);
+		this.hdfsfile = BASE_URI.resolve("/test.csv");
 	}
+
+	private URI hdfsfile;
 
 	@Test
 	public void testService() {
@@ -467,10 +466,12 @@ public class HadoopFileSystemProviderTest extends HadoopTestBase {
 					String.format("%d/", System.currentTimeMillis()));
 			provider.createDirectory(path, new FileAttribute[0]);
 			path = path.resolve("test.csv");
-			SeekableByteChannel c = provider.newByteChannel(path, EnumSet.of(
-					StandardOpenOption.WRITE, StandardOpenOption.CREATE),
-					new FileAttribute[0]);
-			c.write(ByteBuffer.wrap("Test".getBytes()));
+			try (SeekableByteChannel c = provider.newByteChannel(path, EnumSet
+					.of(StandardOpenOption.WRITE, StandardOpenOption.CREATE),
+					new FileAttribute[0])) {
+
+				c.write(ByteBuffer.wrap("Test".getBytes()));
+			}
 			provider.setAttribute(path, "hdfs:replication", (short) 5,
 					new LinkOption[0]);
 			HadoopFileAttributeView view = (HadoopFileAttributeView) provider

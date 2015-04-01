@@ -29,16 +29,15 @@ import java.util.Iterator;
 
 import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
 public class HadoopFileStoreTest extends HadoopTestBase {
-	private FileStore fileStore;
-	private FileSystem fs;
+	FileStore fileStore;
+	FileSystem fs;
 
-	@Before
-	public void acuireFileStore() throws IOException {
-		this.fs = FileSystems.newFileSystem(HDFS_BASE_URI, System.getenv());
+	public HadoopFileStoreTest(String base) throws IOException {
+		super(base);
+		this.fs = FileSystems.newFileSystem(BASE_URI, System.getenv());
 		Iterator<FileStore> iterator = this.fs.getFileStores().iterator();
 		if (iterator.hasNext()) {
 			FileStore fileStore = iterator.next();

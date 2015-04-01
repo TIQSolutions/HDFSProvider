@@ -6,6 +6,17 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>HDFS FileSystemProvider</name>
 	<description>Java-Plugin for Hadoop HDFS</description>
+    <url>https://github.com/TIQSolutions/HDFSProvider</url>
+    <organization>
+        <url>http://tiq-solutions.de/</url>
+        <name>TIQ Solutions GmbH</name>
+    </organization>
+    <licenses>
+        <license>
+            <name>Apache License 2.0</name>
+            <url>http://www.spdx.org/licenses/Apache-2.0</url>
+        </license>
+    </licenses>	
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<hadoop.version>2.5.0</hadoop.version>

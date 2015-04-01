@@ -64,7 +64,10 @@ public class HadoopWebFileSystem extends AbstractFileSystem {
 	public void mkdir(Path dir, FsPermission permission, boolean createParent)
 			throws AccessControlException, FileAlreadyExistsException,
 			FileNotFoundException, UnresolvedLinkException, IOException {
-		if (!(createParent || this.webHdfsFileSystem.exists(dir.getParent()))) {
+		Path parent = new Path(dir, new Path(".."));
+		// URI p = dir.resolve(dir.getPath().endsWith(fileSystem.getSeparator())
+		// ? "..": ".");
+		if (!(createParent || this.webHdfsFileSystem.exists(parent))) {
 			throw new FileNotFoundException(dir.getParent().getName());
 		}
 		this.webHdfsFileSystem.mkdirs(dir, permission);

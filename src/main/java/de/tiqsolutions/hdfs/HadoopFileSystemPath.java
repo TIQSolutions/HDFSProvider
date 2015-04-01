@@ -82,7 +82,7 @@ class HadoopFileSystemPath implements Path {
 	@Override
 	public Path getParent() {
 		if (getNameCount() == 0)
-			return null;
+			return getRoot();
 		URI p = base
 				.resolve(base.getPath().endsWith(fileSystem.getSeparator()) ? ".."
 						: ".");

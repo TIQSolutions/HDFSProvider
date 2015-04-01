@@ -30,17 +30,16 @@ import java.util.ArrayList;
 
 import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
 public class HadoopFileSystemPathTest extends HadoopTestBase {
 	private FileSystem fs;
 	private URI hdfsfile;
 
-	@Before
-	public void acuireFileStore() throws IOException {
-		this.fs = FileSystems.newFileSystem(HDFS_BASE_URI, System.getenv());
-		this.hdfsfile = HDFS_BASE_URI.resolve("/test.csv");
+	public HadoopFileSystemPathTest(String base) throws IOException {
+		super(base);
+		this.fs = FileSystems.newFileSystem(BASE_URI, System.getenv());
+		this.hdfsfile = BASE_URI.resolve("/test.csv");
 	}
 
 	@After
@@ -193,7 +192,7 @@ public class HadoopFileSystemPathTest extends HadoopTestBase {
 	public void testToUri() throws URISyntaxException {
 		Assert.assertEquals((Object) this.fs.getPath("/test/", "test.csv")
 				.toAbsolutePath().toUri(),
-				(Object) HDFS_BASE_URI.resolve("/test/test.csv"));
+				(Object) BASE_URI.resolve("/test/test.csv"));
 	}
 
 	@Test
